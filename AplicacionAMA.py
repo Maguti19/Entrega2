@@ -1,15 +1,19 @@
 import streamlit as st
 import os
 import time
+from bokeh.models.widgets import Button
+from bokeh.models import CustomJS
+from streamlit_bokeh_events import streamlit_bokeh_events
 import glob
 import os
+from googletrans import Translator
 from gtts import gTTS
 from PIL import Image
 
-st.title("Interfases Multimodales.")
-image = Image.open('text_to_audio.png')
+st.title("Aplicativo AMA.")
+#image = Image.open('text_to_audio.png')
 
-st.image(image, width=200)
+#st.image(image, width=200)
 
 
 try:
