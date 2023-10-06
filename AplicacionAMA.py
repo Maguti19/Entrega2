@@ -1,75 +1,102 @@
-import streamlit as st
 import os
-import time
+import streamlit as st
+from PIL import Image
 import glob
+import time
+
 from gtts import gTTS
 from googletrans import Translator
-from PIL import Image
 
-try:
-    os.mkdir("temp")
-except:
-    pass
+st.title("Interfaces Multimodales")
+st.subheader("TRADUCTOR")
 
-st.title("Aplicación AMA")
-#image = Image.open('text_to_audio.png')
-#st.image(image, width=200)
+image = Image.open('traductormorado.jpg')
+st.image(image)
 
-st.subheader("Texto a audio y traducción.")
-
-text = st.text_area("Ingrese el texto que desea traducir y convertir en audio.")
+st.write("Ingrese el texto que desea traducir y convertir en audio:")
+text = st.text_area("Texto")
 
 translator = Translator()
 
-if st.button("Traducir y Convertir a Audio"):
+st.title("Texto a Audio")
+
+in_lang = st.selectbox(
+    "Selecciona el lenguaje de Entrada",
+    ("Inglés", "Español", "Alemán", "Coreano", "Mandarín", "Japonés"),
+)
+if in_lang == "Inglés":
+    input_language = "en"
+elif in_lang == "Español":
+    input_language = "es"
+elif in_lang == "Alemán":
+    input_language = "de"
+elif in_lang == "Coreano":
+    input_language = "ko"
+elif in_lang == "Mandarín":
+    input_language = "zh-cn"
+elif in_lang == "Japonés":
+    input_language = "ja"
+
+out_lang = st.selectbox(
+    "Selecciona el lenguaje de salida",
+    ("Inglés", "Español", "Alemán", "Coreano", "Mandarín", "Japonés"),
+)
+if out_lang == "Inglés":
+    output_language = "en"
+elif out_lang == "Español":
+    output_language = "es"
+elif out_lang == "Alemán":
+    output_language = "de"
+elif out_lang == "Coreano":
+    output_language = "ko"
+elif out_lang == "Mandarín":
+    output_language = "zh-cn"
+elif out_lang == "Japonés":
+    output_language = "ja"
+
+english_accent = st.selectbox(
+    "Selecciona el acento",
+    (
+        "Defecto",
+        "Español",
+        "Reino Unido",
+        "Estados Unidos",
+        "Canadá",
+        "Australia",
+        "Irlanda",
+        "Sudáfrica",
+    ),
+)
+
+if english_accent == "Defecto":
+    tld = "com"
+elif english_accent == "Español":
+    tld = "com.mx"
+# ... (agregar más opciones según sea necesario)
+
+def text_to_speech(input_language, output_language, text, tld):
+    translation = translator.translate(text, src=input_language, dest=output_language)
+    trans_text = translation.text
+    tts = gTTS(trans_text, lang=output_language, tld=tld, slow=False)
+    try:
+        my_file_name = trans_text[0:20]
+    except:
+        my_file_name = "audio"
+    tts.save(f"temp/{my_file_name}.mp3")
+    return my_file_name, trans_text
+
+display_output_text = st.checkbox("Mostrar el texto")
+
+if st.button("Convertir"):
     if text:
-        in_lang = st.selectbox(
-            "Selecciona el lenguaje de Entrada",
-            ("Inglés", "Español", "Italiano", "Coreano", "Francés", "Japonés"),
-        )
-        if in_lang == "Inglés":
-            input_language = "en"
-        elif in_lang == "Español":
-            input_language = "es"
-        # ... (agregar más idiomas según sea necesario)
-
-        out_lang = st.selectbox(
-            "Selecciona el lenguaje de salida",
-            ("Inglés", "Español", "Italiano", "Coreano", "Francés", "Japonés"),
-        )
-        if out_lang == "Inglés":
-            output_language = "en"
-        elif out_lang == "Español":
-            output_language = "es"
-        # ... (agregar más idiomas según sea necesario)
-
-        translation = translator.translate(text, src=input_language, dest=output_language)
-        translated_text = translation.text
-
-        tts = gTTS(translated_text, lang=output_language, slow=False)
-        try:
-            my_file_name = translated_text[0:20]
-        except:
-            my_file_name = "audio"
-        tts.save(f"temp/{my_file_name}.mp3")
-
-        audio_file = open(f"temp/{my_file_name}.mp3", "rb")
+        result, output_text = text_to_speech(input_language, output_language, text, tld)
+        audio_file = open(f"temp/{result}.mp3", "rb")
         audio_bytes = audio_file.read()
+        st.markdown(f"## Tú audio:")
         st.audio(audio_bytes, format="audio/mp3", start_time=0)
 
-        st.markdown(f"## Texto Traducido:")
-        st.write(f" {translated_text}")
-
-        def remove_files(n):
-            mp3_files = glob.glob("temp/*mp3")
-            if len(mp3_files) != 0:
-                now = time.time()
-                n_days = n * 86400
-                for f in mp3_files:
-                    if os.stat(f).st_mtime < now - n_days:
-                        os.remove(f)
-                        print("Deleted ", f)
-
-        remove_files(7)
+        if display_output_text:
+            st.markdown(f"## Texto de salida:")
+            st.write(f" {output_text}")
     else:
         st.warning("Por favor, ingrese un texto para traducir y convertir en audio.")
