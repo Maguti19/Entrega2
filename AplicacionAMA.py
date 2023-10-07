@@ -14,16 +14,40 @@ from googletrans import Translator
 
 
 
-def translate_text(text, source_lang, target_lang):
-    translator = Translator()
-    translation = translator.translate(text, src=source_lang, dest=target_lang)
-    return translation.text
+st.title("Interfases Multimodales.")
 
-if st.button("Convertir"):
-    source_lang = "es"  # Lenguaje de origen (puedes cambiarlo según tus necesidades)
-    target_lang = "en"  # Lenguaje de destino (puedes cambiarlo según tus necesidades)
+try:
+    os.mkdir("temp")
+except:
+    pass
 
-    translated_text = translate_text(text, source_lang, target_lang)
+st.subheader("Texto a audio y traducción.")
+st.write('Las interfaces de texto a audio son fundamentales en las interfaces multimodales ya que permiten '
+         'una comunicación más accesible y natural, facilitando la inclusión de personas con discapacidades '
+         'visuales y permitiendo la interacción en situaciones donde no es posible leer texto. Estas interfaces '
+         'también impulsan tecnologías emergentes como los asistentes de voz inteligentes, haciendo que la tecnología '
+       )
+
+source_lang = "es"  # Lenguaje de origen (puedes cambiarlo según tus necesidades)
+target_lang = "en"  # Lenguaje de destino (puedes cambiarlo según tus necesidades)
+
+translator = Translator()
+
+text = st.text_input("Ingrese el texto:")
+
+tld = "es"
+
+def text_to_speech(text, tld):
+    tts = gTTS(text, "es", tld, slow=False)
+    try:
+        my_file_name = text[0:20]
+    except:
+        my_file_name = "audio"
+    tts.save(f"temp/{my_file_name}.mp3")
+    return my_file_name, text
+
+if text:
+    translated_text = translator.translate(text, src=source_lang, dest=target_lang).text
     result, output_text = text_to_speech(translated_text, tld)
     
     audio_file = open(f"temp/{result}.mp3", "rb")
@@ -33,8 +57,5 @@ if st.button("Convertir"):
     
     st.markdown(f"## Texto en audio:")
     st.write(f" {output_text}")
-
-
-
 
 
