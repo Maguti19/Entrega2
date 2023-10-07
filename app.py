@@ -8,7 +8,7 @@ import os
 
  
 
-st.title("Interfases Multimodales.")
+st.title("Aplicativo AMA")
 
  
 
@@ -24,13 +24,9 @@ except:
 
 st.subheader("Texto a audio y traducción.")
 
-st.write('Las interfaces de texto a audio son fundamentales en las interfaces multimodales ya que permiten '
-
-         'una comunicación más accesible y natural, facilitando la inclusión de personas con discapacidades '
-
-         'visuales y permitiendo la interacción en situaciones donde no es posible leer texto. Estas interfaces '
-
-         'también impulsan tecnologías emergentes como los asistentes de voz inteligentes, haciendo que la tecnología '
+st.write('El siguiente aplicativo permite ingresar un texto y reproducir un audio de la traducción de este mismo'
+         'Creemos que puede ser útil cuando te quieres comunicar con otras personas que de otros paies,'
+         'cuando no conoces el idioma de ellos'
 
        )
 
