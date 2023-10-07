@@ -1,16 +1,7 @@
+import os
 import streamlit as st
 from googletrans import Translator
 from gtts import gTTS
-
-# Definir la función text_to_speech antes de su uso
-def text_to_speech(text, tld):
-    tts = gTTS(text, "es", tld, slow=False)
-    try:
-        my_file_name = text[0:20]
-    except:
-        my_file_name = "audio"
-    tts.save(f"temp/{my_file_name}.mp3")
-    return my_file_name, text
 
 st.title("Interfases Multimodales.")
 
@@ -45,10 +36,19 @@ languages = {
 # Widget para seleccionar el idioma de destino
 target_lang = st.selectbox("Seleccione el idioma de destino:", list(languages.keys()))
 
+def text_to_speech(text, tld):
+    tts = gTTS(text, lang=tld, slow=False)
+    try:
+        my_file_name = text[0:20]
+    except:
+        my_file_name = "audio"
+    tts.save(f"temp/{my_file_name}.mp3")
+    return my_file_name, text
+
 if text and target_lang:
     target_lang_code = languages[target_lang]
     translated_text = translator.translate(text, src=source_lang, dest=target_lang_code).text
-    result, output_text = text_to_speech(translated_text, tld)
+    result, output_text = text_to_speech(translated_text, target_lang_code)
     
     audio_file = open(f"temp/{result}.mp3", "rb")
     audio_bytes = audio_file.read()
