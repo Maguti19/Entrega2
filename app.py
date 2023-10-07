@@ -14,7 +14,7 @@ st.title("Aplicativo AMA")
 
 image = Image.open('translate.png')
 
-st.image(image, width=200, height=200)
+st.image(image, width=200)
 
 try:
 
@@ -125,4 +125,4 @@ if text and target_lang:
 
 image2 = Image.open('traducir.jpg')
 
-st.image(image2, width=200, height=200)
+st.image(image2, width=200)
