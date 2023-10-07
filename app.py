@@ -10,7 +10,9 @@ import os
 
 st.title("Aplicativo AMA")
 
- 
+ image = Image.open('traductor.jpeg')
+
+st.image(image, width=200)
 
 try:
 
@@ -118,3 +120,7 @@ if text and target_lang:
     st.markdown(f"## Texto en audio:")
 
     st.write(f" {output_text}")
+
+image = Image.open('traducir.jpg')
+
+st.image(image, width=200)
