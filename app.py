@@ -1,5 +1,3 @@
-[4:46 p. m.] Maria Alejandra Arias Olarte
-
 import streamlit as st
 
 from googletrans import Translator
