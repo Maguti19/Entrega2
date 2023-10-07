@@ -125,4 +125,4 @@ if text and target_lang:
 
 image2 = Image.open('traducir.jpg')
 
-st.image(image2, width=200)
+st.image(image2, width=250)
