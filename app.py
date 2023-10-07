@@ -4,6 +4,8 @@ from googletrans import Translator
 
 from gtts import gTTS
 
+from PIL import Image
+
 import os
 
  
