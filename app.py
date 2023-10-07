@@ -58,7 +58,10 @@ languages = {
 
     "Chino Mandarín": "zh-cn",
 
-    "Francés": "fr"
+    "Francés": "fr",
+    "Ruso": "ru",
+ 
+    "Hindi": "hi",
 
 }
 
