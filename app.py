@@ -35,7 +35,7 @@ languages = {
 # Widget para seleccionar el idioma de destino
 target_lang = st.selectbox("Seleccione el idioma de destino:", list(languages.keys()))
 
-def text_to_speech(text, tld):
+result, output_text = text_to_speech(translated_text, target_lang_code)
     tts = gTTS(text, "es", tld, slow=False)
     try:
         my_file_name = text[0:20]
