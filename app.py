@@ -10,7 +10,7 @@ import os
 
 st.title("Aplicativo AMA")
 
- image = Image.open('traductor.jpeg')
+image = Image.open('traductor.jpeg')
 
 st.image(image, width=200)
 
