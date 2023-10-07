@@ -121,6 +121,6 @@ if text and target_lang:
 
     st.write(f" {output_text}")
 
-image = Image.open('traducir.jpg')
+image2 = Image.open('traducir.jpg')
 
-st.image(image, width=200)
+st.image(image2, width=200)
