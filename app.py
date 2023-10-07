@@ -10,7 +10,7 @@ import os
 
 st.title("Aplicativo AMA")
 
-image = Image.open('traductor.jpeg')
+image = Image.open('')
 
 st.image(image, width=200)
 
@@ -121,6 +121,3 @@ if text and target_lang:
 
     st.write(f" {output_text}")
 
-image2 = Image.open('traducir.jpg')
-
-st.image(image2, width=200)
